@@ -4,6 +4,7 @@ class ApplicationsController < ApplicationController
     end
 
     def show
+        # binding.pry
         @application = Application.find(params[:id])
         @pets = @application.pets
     end
@@ -12,6 +13,14 @@ class ApplicationsController < ApplicationController
     end
 
     def create
-        # Application.create
+        @application = Application.create(application_params)
+        redirect_to "/applications"
+       
     end
+
+    private
+    def application_params
+        params.permit(:applicant_name, :street_address, :city, :state, :zip_code, :description, :status)
+    end
+
 end

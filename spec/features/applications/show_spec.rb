@@ -62,7 +62,7 @@ RSpec.describe 'the show page' do
 
       visit "/applications/#{application_1.id}"
 
-      # save_and_open_page
+      save_and_open_page
 
       expect(page).to have_link("Bare-y Manilow")
       click_on("Bare-y Manilow")

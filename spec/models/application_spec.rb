@@ -5,4 +5,9 @@ RSpec.describe Application, type: :model do
     it {should have_many :pet_applications}
     it {should have_many(:pets).through(:pet_applications)}
   end
+
+  # describe "actions" do
+  #   it "should combine street adress,city,state,zip to make one string of an address" do
+  #   end
+  # end
 end

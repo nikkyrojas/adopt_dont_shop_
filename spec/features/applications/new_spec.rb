@@ -9,7 +9,7 @@ RSpec.describe "create new doctors" do
     it 'redirects to new application form' do
         visit "/pets"
         click_link("Start Application")
-        save_and_open_page
+        # save_and_open_page
         expect(page).to have_current_path("/applications/new")
     end
 
@@ -29,6 +29,6 @@ RSpec.describe "create new doctors" do
         fill_in "Description", with: "I have adopted many and I love them all"
 
         click_button "Submit Application"
-        expect(page).to have_current_path("/applications/#{@appication.id}")
+        expect(page).to have_current_path("/applications/#{Application.first.id}")
     end
 end

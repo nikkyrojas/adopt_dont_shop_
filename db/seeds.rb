@@ -10,7 +10,7 @@ Pet.destroy_all
 VeterinaryOffice.destroy_all
 Veterinarian.destroy_all
 Application.destroy_all
-PetApplication.destroy_all
+# PetApplication.destroy_all
 
 
 

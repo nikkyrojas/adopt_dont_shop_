@@ -6,7 +6,11 @@ class ApplicationsController < ApplicationController
     def show
         # binding.pry
         @application = Application.find(params[:id])
-        @pets = @application.pets
+        if params[:search].present?
+            @pets = Pet.search(params[:search])
+        else
+            @pets = Pet.adoptable
+        end
     end
 
     def new
@@ -14,10 +18,7 @@ class ApplicationsController < ApplicationController
 
     def create
         @application = Application.create(application_params)
-        # @application[:status] = "In Progress"
-        # @application
-        # binding.pry
-        
+   
         redirect_to "/applications/#{@application.id}"
        
     end

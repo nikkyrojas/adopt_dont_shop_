@@ -8,6 +8,8 @@ class Application < ApplicationRecord
         address.upcase
     end
 
-    # def status
-    # end
+    def status
+        application = Application.last
+        application.status = "In progress"
+    end
 end

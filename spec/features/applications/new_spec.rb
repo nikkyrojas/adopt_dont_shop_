@@ -29,6 +29,6 @@ RSpec.describe "create new doctors" do
         fill_in "Descrpition", with: "I have adopted many and I love them all"
 
         click_button "Submit Application"
-        expect(page).to have_current_path("/applications")
+        expect(page).to have_current_path("/applications/#{@appication.id}")
     end
 end

@@ -13,7 +13,7 @@ RSpec.describe "create new doctors" do
         expect(page).to have_current_path("/applications/new")
     end
 
-    it 'displays new content in new page' do
+    it 'displays new form content' do
         visit "/applications/new"
         expect(page).to have_content("New Application")
     end
@@ -21,12 +21,12 @@ RSpec.describe "create new doctors" do
     it 'submits informations from form' do
         visit "/applications/new"
         
-        fill_in "Name", with: "Phil McGraw"
-        fill_in "Street Address", with: "453786"
-        fill_in "City", with: "false"
-        fill_in "State", with: "false"
-        fill_in "Zip code", with: "false"
-        fill_in "Descrpition", with: "false"
+        fill_in "Applicant name", with: "Brittney Spears" #, visible: false
+        fill_in "Street address", with: "453 19th St"
+        fill_in "City", with: "Clabasas"
+        fill_in "State", with: "CA"
+        fill_in "Zip code", with: "60254"
+        fill_in "Descrpition", with: "I have adopted many and I love them all"
 
         click_button "Submit Application"
         expect(page).to have_current_path("/applications")

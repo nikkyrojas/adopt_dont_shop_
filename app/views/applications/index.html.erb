@@ -1,6 +1,7 @@
 <% @applications.each do |application| %>
-  <h1><p><%= application.applicant_name %></p></h1>
+  <h3><p><%=link_to application.applicant_name, "/applications/#{application.id}" %></p></h3>
   <p><%= application.address %></p>
   <p><%= application.description %></p>
   <p><%= application.status %></p>
 <% end %>
+

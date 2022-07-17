@@ -38,12 +38,46 @@ RSpec.describe 'the show page' do
   end
 
   it 'lists matched/partial matched pets based on search' do
-  visit "/applications/#{@application_1.id}"
+    visit "/applications/#{@application_1.id}"
 
-  fill_in 'Search', with: "Lob"
-  click_on("Search")
+    fill_in 'Search', with: "Lob"
+    click_on("Search")
 
-  expect(page).to have_content(@pet_2.name)
-  expect(page).to_not have_content(@pet_1.name)
+    expect(page).to have_content(@pet_2.name)
+    expect(page).to_not have_content(@pet_1.name)
   end
-end
+
+  it 'has a button to submit application' do
+    visit "/applications/#{@application_1.id}"
+
+    fill_in 'Search', with: "Lob"
+    click_on("Search")
+    expect(page).to have_button("Submit")
+  end
+  
+  it 'has an adopt this pet button' do
+
+    visit "/applications/#{application.id}"
+    expect(page).to have_content("Add a Pet to this Application")
+
+    fill_in 'Search', with: 'Chungus'
+    click_button 'Submit'
+
+    expect(current_path).to eq("/applications/#{application.id}/")
+
+    expect(page).to have_button("Adopt this Pet")
+  end
+
+  it "adopt this pet button adds a pet to the application" do
+    visit "/applications/#{application.id}"
+    
+    expect(page).to have_content("Add a Pet to this Application")
+
+    fill_in 'Search', with: 'Lobster'
+    click_button 'Submit'
+    click_button 'Adopt this Pet'
+    expect(page).to have_content("Applying for pet: Lobster")
+  end
+
+
+

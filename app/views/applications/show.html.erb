@@ -1,9 +1,19 @@
 <h1>Application</h1>
 
     <h3>Applicants Name: <%= @application.applicant_name %></h3>
+    
+    <h4>Add a Pet to this Application 
+    <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+    <%= f.label :search %>
+    <%= f.text_field :search %>
+    <%= f.submit "Search" %>
+    <% end %>
+    </h4>
+
     <p>Status: <%= @application.status %></p>
     <p>Address: <%= @application.address %></p>
     <p>Description: <%= @application.description %></p>
+    
     <h3><p>Pets: <%@pets.each do |pet| %></p></h3>
     <h4><p><%= link_to pet.name, "/pets/#{pet.id}"  %></p></h4>
 <% end %>

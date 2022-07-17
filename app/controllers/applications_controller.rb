@@ -18,13 +18,14 @@ class ApplicationsController < ApplicationController
 
     def create
         @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: "", status: "In Progress")
-        redirect_to "/applications/#{@application.id}"
+      
+        if @application.save
+            redirect_to "/applications/#{@application.id}"
+        elseif @application[:name].empty? || @application[:street_address].empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty?
+            redirect_to "/applications/new"
+            flash[:alert] = "Error: #{error_message(@application.errors)}"
+        end
     end
-        # if @application[:name].empty? || @application[:street_address].empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty?
-#       redirect_to "/applications/new", notice: "ERROR field left incomplete."
-#     else
-#       redirect_to "/applications/#{@application[:id]}"
-#     end
 
     def add_pet
         PetApplication.create!(pet_id: params[:chosen_pet], application_id: params[:id])

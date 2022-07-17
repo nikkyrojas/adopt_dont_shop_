@@ -19,11 +19,12 @@ class ApplicationsController < ApplicationController
     def create
         @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: "", status: "In Progress")
       
-        if @application.save
-            redirect_to "/applications/#{@application.id}"
-        elseif @application[:name].empty? || @application[:street_address].empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty?
+        if  @application[:applicant_name].empty? || @application.street_address.empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty?
+            flash[:alert] = "#{error_message(@application.errors)}"
             redirect_to "/applications/new"
-            flash[:alert] = "Error: #{error_message(@application.errors)}"
+
+        elsif @application.save
+            redirect_to "/applications/#{@application.id}"
         end
     end
 

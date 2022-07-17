@@ -9,11 +9,24 @@
     <%= f.submit "Search" %>
     <% end %>
     </h4>
+    
+    <% if params[:search].present? %>
+        <h4><p>Pet Result: <%@matched_pets.each do |pet| %></p></h4>
+        <h4><p><%= link_to pet.name, "/pets/#{pet.id}"  %></p></h4>
+        <% end %>
+    <% end %>
 
     <p>Status: <%= @application.status %></p>
     <p>Address: <%= @application.address %></p>
     <p>Description: <%= @application.description %></p>
     
-    <h3><p>Pets: <%@pets.each do |pet| %></p></h3>
+    <% if @application.pets.length > 0 && @application.status == "In Progress" %>
+        <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+        <%= f.submit "Search" %>
+        <% end %>
+     <% end %>
+    
+
+    <h3><p>Adoptable Pets: <%@pets.each do |pet| %></p></h3>
     <h4><p><%= link_to pet.name, "/pets/#{pet.id}"  %></p></h4>
-<% end %>
+    <% end %>

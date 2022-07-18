@@ -55,9 +55,8 @@ RSpec.describe "create new doctors" do
         # expect(page).to have_content("#{application_4.description}")
 
         click_button "Submit Application"
-        save_and_open_page
-        expect(current_path).to eq("/applications/#{Application.last.id}")
+
+        expect(current_path).to eq("/applications/new")
         expect(page).to have_content("Error")
-        expect(page).to have_content("blank")
     end
 end

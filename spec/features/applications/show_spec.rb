@@ -86,14 +86,15 @@ RSpec.describe 'the show page' do
 
     fill_in 'Search', with: 'Lobster'
     click_button 'Search'
-    click_button 'Adopt Pet'
-    expect(page).to have_content("Applying for pet: Lobster")
+    click_button 'Add Pet'
+
+    # application_2.add_pet
+    save_and_open_page
+    expect(current_path).to eq("/applications/#{application_2.id}")
+    expect(page).to have_content("Lobster")
   end
 end
-# As a visitor
-# When I visit an application's show page
-# And I search for a Pet by name
-# And I see the names Pets that match my search
+
 # Then next to each Pet's name I see a button to "Adopt this Pet"
 # When I click one of these buttons
 # Then I am taken back to the application show page

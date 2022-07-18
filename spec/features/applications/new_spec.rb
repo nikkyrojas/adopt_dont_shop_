@@ -14,7 +14,6 @@ RSpec.describe "create new doctors" do
     
     it 'displays new form content' do
         visit "/applications/new"
-        save_and_open_page
         expect(page).to have_content("New Application")
     end
     

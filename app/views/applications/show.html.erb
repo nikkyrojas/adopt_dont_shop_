@@ -31,10 +31,12 @@
     
     <h3>Added Pets: </h3>
         <% @application.pets.each do |pet| %>
-            <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
-            <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
-            <%= f.submit "Submit" %>
+            <div id="addpets-<%= pet.id%>">
+                <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+                <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+                <%= f.submit "Submit" %>
             <% end %>
+            
         <% end %>
     <% end %>
 

@@ -24,11 +24,19 @@ RSpec.describe 'the show page' do
   end
 
   it "has a link, link goes to each pets show page" do
-    visit "/applications/#{@application_1.id}"
+    pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter_1.id)
+    pet_3 = Pet.create(adoptable: true, age: 1, breed: 'pit', name: 'Lobely', shelter_id: @shelter_1.id)
 
-    expect(page).to have_link("Bare-y Manilow")
-    click_on("Bare-y Manilow")
-    expect(page).to have_current_path("/pets/#{@pet_1.id}")
+    visit "/applications/#{@application_1.id}"
+    
+    fill_in 'Search', with: "Lob"
+    click_on("Search")
+
+    within "#addpets-#{pet_2.id}" do
+      expect(page).to have_link("Bare-y Manilow")
+      click_on("Bare-y Manilow")
+      expect(page).to have_current_path("/pets/#{@pet_2.id}")
+    end
   end
 
   it 'has a search box to filter pets by key word' do
@@ -89,7 +97,6 @@ RSpec.describe 'the show page' do
     click_button 'Add Pet'
 
     # application_2.add_pet
-    save_and_open_page
     expect(current_path).to eq("/applications/#{application_2.id}")
     expect(page).to have_content("Lobster")
   end

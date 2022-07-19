@@ -20,7 +20,6 @@ RSpec.describe 'the show page' do
     expect(page).to have_content(@application_1.description)
     expect(page).to have_content(@application_1.status)
     expect(page).to have_content(@pet_1.name)
-
     expect(page).to have_content(pet_2.name)
   end
 
@@ -78,7 +77,6 @@ RSpec.describe 'the show page' do
   end
 
   it "adopt this pet button adds a pet to the application" do
-
     application_2 = Application.create!(applicant_name: 'Bob Ross', street_address: '8753 Main St', city: 'Longmont', state: 'CO', zip_code: '80765', description: 'I make a lot of money', status: 'rejected')
     pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: @shelter_1.id)
     
@@ -95,8 +93,6 @@ RSpec.describe 'the show page' do
     expect(current_path).to eq("/applications/#{application_2.id}")
     expect(page).to have_content("Lobster")
   end
-end
-
 
   it 'displays section to input description and submit application when dog count > 0' do
     visit "/applications/#{@application_1.id}"
@@ -104,12 +100,6 @@ end
     # fill_in 'Search', with: 'Lobster'
     # click_button 'Submit'
     # click_button 'Adopt this Pet'
-
-    # Then next to each Pet's name I see a button to "Adopt this Pet"
-    # When I click one of these buttons
-    # Then I am taken back to the application show page
-    # And I see the Pet I want to adopt listed on this application
-
 
     fill_in 'description', with: 'Testing'
     click_button 'Submit Application'

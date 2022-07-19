@@ -20,10 +20,10 @@ class ApplicationsController < ApplicationController
     end
 
     def create
-        @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: "", status: "In Progress")
-      
-        if @application[:applicant_name].empty?
-            flash[:alert] = "Error: #{error_message(@application.errors)}"
+        @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: params[:description], status: "In progress")
+
+        if  @application[:applicant_name].empty? || @application.street_address.empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty? || @application[:description].empty?
+            flash[:alert] = "#{error_message(@application.errors)}"
             redirect_to "/applications/new"
         @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: params[:description], status: "In progress")
 
@@ -37,6 +37,15 @@ class ApplicationsController < ApplicationController
         end
     end
 
+
+    def add_pet
+        application = Application.find(params[:id])
+        pet = Pet.find(params[:id])
+        PetApplication.create!(pet: pet, application: application)
+        application.save
+        redirect_to "/applications/#{application.id}"
+    end
+
     # def add
     #     binding.pry
     #     @pet_app = PetApplication.create!(pet_id: params[:id], application_id: params[:id])
@@ -45,6 +54,7 @@ class ApplicationsController < ApplicationController
     #     application.save
     #     redirect_to "/applications/#{params[:id]}"
     # end
+
 
     def update
         @application = Application.find(params[:id])
@@ -58,8 +68,6 @@ class ApplicationsController < ApplicationController
         params.permit(:applicant_name, :street_address, :city, :state, :zip_code, :description, :status)
     end
 end
-
-
 
 #   def submit_application
 #     application = Application.find(params[:id])

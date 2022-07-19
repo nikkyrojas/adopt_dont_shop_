@@ -16,7 +16,9 @@
     <% if params[:search].present?  %>
         <h4><p>Pet Result: <%@matched_pets.each do |pet| %></p></h4>
             <div id="pets-<%=pet.id%>">
-                <h4><p><%= link_to pet.name, "/pets/#{pet.id}" %><%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %> <%= f.submit "Add Pet" %></p></h4>
+
+                <h4><p><%= link_to pet.name, "/pets/#{pet.id}" %><%= form_with url: "/applications/#{@application.id}", method: :post, local: true do |f| %> <%= f.submit "Add Pet" %></p></h4>
+
             <% end %>
             </div>
         <% end %>
@@ -35,7 +37,6 @@
             <% end %>
         <% end %>
     <% end %>
-   
 
     <p>Status: <%= @application.status %></p>
     <p>Address: <%= @application.address %></p>
@@ -49,10 +50,10 @@
      <% end %>
 
 
-    <% if @application.pets.length > 0 && @application.status != "Pending" && @application.status == "In Progress" %>
+    <% if @application.pets.length > 0 && @application.status != "Pending" || @application.status == "In Progress" %>
         <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
         <p><%= f.label "Why are you a good fit for these companions? Explain below." %></p>
-        <p><%= f.text_area :description %></p>
+        <p><%= f.text_area :description, required: true %></p>
         <p><%= f.submit "Submit Application" %></p>
         <% end %>
      <% end %>

@@ -35,6 +35,6 @@ Application.destroy_all
 @application_3 = Application.create!(applicant_name: 'Post Malone', street_address: '6543 Peoria St', city: 'Denver', state: 'CO', zip_code: '80056', description: 'I am a foster pet parent', status: nil)
 @application_4 = Application.create!(applicant_name: 'Doja Cat', street_address: '9742 Billings St', city: 'Aurora', state: 'CO', zip_code: '80245', description: 'I need an emotional support animal', status: nil)
 
-# pet_app1 = PetApplication.create!(pet_id: @pet_1.id, application_id: @application_1.id)
-# pet_app2 = PetApplication.create!(pet_id: @pet_2.id, application_id: @application_1.id)
+pet_app1 = PetApplication.create!(pet: @pet_1, application: @application_1)
+pet_app2 = PetApplication.create!(pet: @pet_2, application: @application_1)
 

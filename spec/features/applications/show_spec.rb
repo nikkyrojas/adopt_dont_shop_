@@ -100,4 +100,18 @@ end
 # Then I am taken back to the application show page
 # And I see the Pet I want to adopt listed on this application
 
+  it 'displays section to input description and submit application when dog count > 0' do
+    visit "/applications/#{@application_1.id}"
 
+    # fill_in 'Search', with: 'Lobster'
+    # click_button 'Submit'
+    # click_button 'Adopt this Pet'
+
+    fill_in 'description', with: 'Testing'
+    click_button 'Submit Application'
+
+    save_and_open_page
+    expect(page).to have_content("Pending")
+    expect(page).to have_content("Lobster")
+  end
+end

@@ -42,6 +42,21 @@
     <p>Description: <%= @application.description %></p>
     
 
+    <% if @application.pets.length > 0 && @application.status == "In Progress" %>
+        <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+        <%= f.submit "Search" %>
+        <% end %>
+     <% end %>
+
+
+    <% if @application.pets.length > 0 && @application.status != "Pending" && @application.status == "In Progress" %>
+        <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
+        <p><%= f.label "Why are you a good fit for these companions? Explain below." %></p>
+        <p><%= f.text_area :description %></p>
+        <p><%= f.submit "Submit Application" %></p>
+        <% end %>
+     <% end %>
+         
     <h3><p>Adoptable Pets: <%@pets.each do |pet| %></p></h3>
     <h4><p><%= link_to pet.name, "/pets/#{pet.id}"  %></p></h4>
     <% end %>

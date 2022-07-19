@@ -9,6 +9,11 @@ class ApplicationsController < ApplicationController
         if params[:search].present?
             @matched_pets = Pet.search(params[:search])
         end
+
+    end
+
+    def add_pet
+        binding.pry
     end
 
     def new
@@ -20,18 +25,26 @@ class ApplicationsController < ApplicationController
         if @application[:applicant_name].empty?
             flash[:alert] = "Error: #{error_message(@application.errors)}"
             redirect_to "/applications/new"
+        @application = Application.create!(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: params[:description], status: "In progress")
+
+        if  @application[:applicant_name].empty? || @application.street_address.empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty? || @application[:description].empty?
+            flash[:alert] = "#{error_message(@application.errors)}"
+            redirect_to "/applications/new"
+
+
         elsif @application.save
             redirect_to "/applications/#{@application.id}"
         end
     end
 
-    def add_pet
-        PetApplication.create!(pet_id: params[:chosen_pet], application_id: params[:id])
-        application = Application.find(params[:id])
-        application.description = params[:description]
-        application.save
-        redirect_to "/applications/#{params[:id]}"
-    end
+    # def add
+    #     binding.pry
+    #     @pet_app = PetApplication.create!(pet_id: params[:id], application_id: params[:id])
+    #     application = Application.find(params[:id])
+    #     application.description = params[:description]
+    #     application.save
+    #     redirect_to "/applications/#{params[:id]}"
+    # end
 
     def update
         @application = Application.find(params[:id])

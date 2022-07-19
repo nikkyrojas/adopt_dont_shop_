@@ -19,4 +19,8 @@ class Application < ApplicationRecord
         application = Application.last
         application.status = "In progress"
     end
+
+    # def added_pets
+
+    # end
 end

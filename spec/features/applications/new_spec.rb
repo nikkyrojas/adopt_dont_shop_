@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "create new doctors" do
+RSpec.describe "create new application form" do
     it 'displays link that starts an application' do
         visit "/pets"
         expect(page).to have_link("Start Application")
@@ -46,7 +46,7 @@ RSpec.describe "create new doctors" do
         fill_in "Description", with: "#{application_4.description}"
         # fill_in "Status", with: "#{application_4.status}"  Unable to find field "Status" that is not disabled
         
-        # expect(page).to have_content("#{application_4.applicant_name}")
+        # expect(page).to have_content("Doja Cat")
         # expect(page).to have_content("#{application_4.street_address}")
         # expect(page).to have_content("#{application_4.state}")
         # expect(page).to_not have_content("#{application_4.city}")
@@ -56,6 +56,15 @@ RSpec.describe "create new doctors" do
         click_button "Submit Application"
 
         expect(current_path).to eq("/applications/new")
-        expect(page).to have_content("Error")
+        expect(page).to have_content("Error Missing Field(s)") 
+    end
+
+    it 'I can not create an application without a city' do
+        visit '/applications/new'
+
+        click_button "Submit Application"
+
+        expect(page).to have_content("Error Missing Field(s)")
+        expect(page).to have_button('Submit Application')
     end
 end

@@ -5,10 +5,10 @@ class ApplicationsController < ApplicationController
 
     def show
         @application = Application.find(params[:id])
-        @pets = Pet.all.adoptable
-        if params[:search].present?
-            @matched_pets = Pet.search(params[:search])
-         end
+        @pets = Pet.search(params[:search]).adoptable if params[:search].present?
+        # @pets = Pet.all.adoptable
+        # if params[:search].present?
+        #     @matched_pets = Pet.search(params[:search])
     end
 
 
@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
     end
 
     def create
-         @application = Application.new(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: params[:description], status: "In progress")
+        @application = Application.new(applicant_name: params[:applicant_name], street_address: params[:street_address], city: params[:city], state: params[:state], zip_code: params[:zip_code], description: params[:description], status: "In progress")
         if  @application[:applicant_name].empty? || @application.street_address.empty? || @application[:city].empty? || @application[:state].empty? || @application[:zip_code].empty? || @application[:description].empty?
             flash[:alert] = "#{error_message(@application.errors)}"
             redirect_to "/applications/new"
@@ -24,25 +24,6 @@ class ApplicationsController < ApplicationController
             redirect_to "/applications/#{@application.id}"
         end
     end
-
-
-    def add_pet
-        application = Application.find(params[:id])
-        pet = Pet.find(params[:id])
-        PetApplication.create!(pet: pet, application: application)
-        application.save
-        redirect_to "/applications/#{application.id}"
-    end
-
-    # def add
-    #     binding.pry
-    #     @pet_app = PetApplication.create!(pet_id: params[:id], application_id: params[:id])
-    #     application = Application.find(params[:id])
-    #     application.description = params[:description]
-    #     application.save
-    #     redirect_to "/applications/#{params[:id]}"
-    # end
-
 
     def update
         @application = Application.find(params[:id])
